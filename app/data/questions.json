@@ -2,8 +2,7 @@
   "questions": [
     {
       "id": "article-haus",
-      "category": "Gender Tests",
-      "difficulty": "Beginner",
+      "category": "Articles",
       "prompt": "Choose the correct definite article for 'Haus' (house).",
       "options": ["der", "die", "das"],
       "answer": "das",
@@ -11,8 +10,7 @@
     },
     {
       "id": "article-frau",
-      "category": "Gender Tests",
-      "difficulty": "Beginner",
+      "category": "Articles",
       "prompt": "Choose the correct definite article for 'Frau' (woman).",
       "options": ["der", "die", "das"],
       "answer": "die",
@@ -20,8 +18,7 @@
     },
     {
       "id": "article-baum",
-      "category": "Gender Tests",
-      "difficulty": "Beginner",
+      "category": "Articles",
       "prompt": "Choose the correct definite article for 'Baum' (tree).",
       "options": ["der", "die", "das"],
       "answer": "der",
@@ -30,7 +27,6 @@
     {
       "id": "word-order-time-manner-place",
       "category": "Word Order",
-      "difficulty": "Intermediate",
       "prompt": "Which order is most typical for adverbial phrases in German?",
       "options": [
         "Time - Manner - Place",
@@ -43,7 +39,6 @@
     {
       "id": "conjugation-sein-ich",
       "category": "Verbs",
-      "difficulty": "Beginner",
       "prompt": "Fill the blank: 'Ich ___ müde.' (to be)",
       "options": ["bin", "bist", "ist"],
       "answer": "bin",
@@ -52,7 +47,6 @@
     {
       "id": "conjugation-haben-wir",
       "category": "Verbs",
-      "difficulty": "Beginner",
       "prompt": "Fill the blank: 'Wir ___ Zeit.' (to have)",
       "options": ["habt", "haben", "hast"],
       "answer": "haben",
@@ -61,7 +55,6 @@
     {
       "id": "case-accusative",
       "category": "Cases",
-      "difficulty": "Beginner",
       "prompt": "Which case usually answers 'Wen? oder Was?'",
       "options": ["Nominative", "Accusative", "Dative"],
       "answer": "Accusative",
@@ -70,7 +63,6 @@
     {
       "id": "case-dative",
       "category": "Cases",
-      "difficulty": "Beginner",
       "prompt": "Which case usually answers 'Wem?'",
       "options": ["Nominative", "Accusative", "Dative"],
       "answer": "Dative",
@@ -79,7 +71,6 @@
     {
       "id": "preposition-auf",
       "category": "Prepositions",
-      "difficulty": "Intermediate",
       "prompt": "Choose the correct translation: 'auf dem Tisch'.",
       "options": ["under the table", "on the table", "in the table"],
       "answer": "on the table",
@@ -88,7 +79,6 @@
     {
       "id": "plural-kind",
       "category": "Nouns",
-      "difficulty": "Beginner",
       "prompt": "Select the plural form of 'Kind' (child).",
       "options": ["Kinder", "Kinds", "Kinde"],
       "answer": "Kinder",

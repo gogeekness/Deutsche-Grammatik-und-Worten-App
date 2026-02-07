@@ -1,4 +1,4 @@
-"""DeutscheLeaarn: a lightweight, cross-platform German grammar game."""
+"""German Grammar Quest: a lightweight, cross-platform German grammar game."""
 from __future__ import annotations
 
 import json
@@ -6,12 +6,12 @@ import os
 import random
 import sys
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 import tkinter as tk
 from tkinter import ttk
 
-APP_NAME = "DeutscheLeaarn"
+APP_NAME = "German Grammar Quest"
 DATA_PATH = Path(__file__).parent / "data" / "questions.json"
 
 DAILY_GOAL = 10
@@ -25,7 +25,6 @@ class Question:
 
     qid: str
     category: str
-    difficulty: str
     prompt: str
     options: tuple[str, ...]
     answer: str
@@ -100,7 +99,6 @@ class QuestionBank:
             Question(
                 qid=item["id"],
                 category=item["category"],
-                difficulty=item["difficulty"],
                 prompt=item["prompt"],
                 options=tuple(item["options"]),
                 answer=item["answer"],
@@ -111,32 +109,11 @@ class QuestionBank:
         if not questions:
             raise ValueError("No questions found in data file.")
         self._questions = questions
-        self._filtered = questions
-        self._queue: list[Question] = []
-
-    @property
-    def categories(self) -> list[str]:
-        return sorted({question.category for question in self._questions})
-
-    @property
-    def difficulties(self) -> list[str]:
-        return sorted({question.difficulty for question in self._questions})
-
-    def set_filters(self, category: str, difficulty: str) -> bool:
-        filtered = self._questions
-        if category != "All":
-            filtered = [q for q in filtered if q.category == category]
-        if difficulty != "All":
-            filtered = [q for q in filtered if q.difficulty == difficulty]
-        if not filtered:
-            return False
-        self._filtered = filtered
         self._queue = []
-        return True
 
     def next_question(self) -> Question:
         if not self._queue:
-            self._queue = self._filtered.copy()
+            self._queue = self._questions.copy()
             random.shuffle(self._queue)
         return self._queue.pop()
 
@@ -149,8 +126,6 @@ class GrammarGameApp(ttk.Frame):
         self._bank = bank
         self._store = store
         self._progress = self._refresh_progress(store.load())
-        self._category_filter = tk.StringVar(value="All")
-        self._difficulty_filter = tk.StringVar(value="All")
         self._current = self._bank.next_question()
         self._selected = tk.StringVar(value="")
         self._feedback_text = tk.StringVar(value="")
@@ -173,52 +148,8 @@ class GrammarGameApp(ttk.Frame):
         instructions_label = ttk.Label(self, text=instructions, wraplength=560)
         instructions_label.grid(row=1, column=0, sticky="w", pady=(4, 12))
 
-        filter_frame = ttk.LabelFrame(self, text="Practice Filters")
-        filter_frame.grid(row=2, column=0, sticky="nsew", pady=(0, 12))
-        filter_frame.columnconfigure(3, weight=1)
-
-        ttk.Label(filter_frame, text="Grammar type:").grid(row=0, column=0, sticky="w", padx=12, pady=8)
-        categories = ["All", *self._bank.categories]
-        self._category_select = ttk.Combobox(
-            filter_frame,
-            values=categories,
-            textvariable=self._category_filter,
-            state="readonly",
-            width=20,
-        )
-        self._category_select.grid(row=0, column=1, sticky="w", padx=(0, 12))
-        self._category_select.bind("<<ComboboxSelected>>", self._on_filter_change)
-
-        ttk.Label(filter_frame, text="Difficulty:").grid(row=0, column=2, sticky="w", padx=(0, 8))
-        difficulties = ["All", *self._bank.difficulties]
-        self._difficulty_select = ttk.Combobox(
-            filter_frame,
-            values=difficulties,
-            textvariable=self._difficulty_filter,
-            state="readonly",
-            width=16,
-        )
-        self._difficulty_select.grid(row=0, column=3, sticky="w")
-        self._difficulty_select.bind("<<ComboboxSelected>>", self._on_filter_change)
-
-        gender_frame = ttk.LabelFrame(self, text="Gender Tests")
-        gender_frame.grid(row=3, column=0, sticky="nsew", pady=(0, 12))
-        gender_frame.columnconfigure(0, weight=1)
-        gender_text = (
-            "Focus on noun gender and article selection. Great for quick daily drills."
-        )
-        ttk.Label(gender_frame, text=gender_text, wraplength=560).grid(
-            row=0, column=0, sticky="w", padx=12, pady=(8, 4)
-        )
-        gender_btn = ttk.Button(
-            gender_frame,
-            text="Practice Gender Tests",
-            command=self._activate_gender_tests,
-        )
-        gender_btn.grid(row=1, column=0, sticky="w", padx=12, pady=(0, 8))
-
         self._question_frame = ttk.LabelFrame(self, text="Question")
-        self._question_frame.grid(row=4, column=0, sticky="nsew", pady=(0, 12))
+        self._question_frame.grid(row=2, column=0, sticky="nsew", pady=(0, 12))
         self._question_frame.columnconfigure(0, weight=1)
 
         self._category_label = ttk.Label(self._question_frame, text="")
@@ -234,14 +165,14 @@ class GrammarGameApp(ttk.Frame):
         self._feedback_label.grid(row=3, column=0, sticky="w", padx=12, pady=(4, 8))
 
         actions = ttk.Frame(self)
-        actions.grid(row=5, column=0, sticky="w")
+        actions.grid(row=3, column=0, sticky="w")
         submit_btn = ttk.Button(actions, text="Check Answer", command=self._check_answer)
         submit_btn.grid(row=0, column=0, padx=(0, 8))
         next_btn = ttk.Button(actions, text="Next Question", command=self._next_question)
         next_btn.grid(row=0, column=1)
 
         progress_frame = ttk.LabelFrame(self, text="Goals & Milestones")
-        progress_frame.grid(row=6, column=0, sticky="nsew", pady=(12, 0))
+        progress_frame.grid(row=4, column=0, sticky="nsew", pady=(12, 0))
         progress_frame.columnconfigure(0, weight=1)
 
         self._daily_label = ttk.Label(progress_frame, text="")
@@ -254,9 +185,7 @@ class GrammarGameApp(ttk.Frame):
         self._milestone_label.grid(row=2, column=0, sticky="w", padx=12, pady=(0, 8))
 
     def _render_question(self) -> None:
-        self._category_label.config(
-            text=f"Category: {self._current.category} | Difficulty: {self._current.difficulty}"
-        )
+        self._category_label.config(text=f"Category: {self._current.category}")
         self._prompt_label.config(text=self._current.prompt)
         self._feedback_text.set("")
         self._selected.set("")
@@ -327,20 +256,6 @@ class GrammarGameApp(ttk.Frame):
         progress.last_played = today_key
         progress.weekly_anchor = week_key
         return progress
-
-    def _on_filter_change(self, _event: object) -> None:
-        if not self._bank.set_filters(self._category_filter.get(), self._difficulty_filter.get()):
-            self._feedback_text.set("No questions match those filters yet. Try another combination.")
-            self._category_filter.set("All")
-            self._difficulty_filter.set("All")
-            self._bank.set_filters("All", "All")
-        self._next_question()
-
-    def _activate_gender_tests(self) -> None:
-        self._category_filter.set("Gender Tests")
-        self._difficulty_filter.set("All")
-        self._bank.set_filters("Gender Tests", "All")
-        self._next_question()
 
 
 def main() -> None:
