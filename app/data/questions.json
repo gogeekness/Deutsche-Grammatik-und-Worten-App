@@ -1,0 +1,88 @@
+{
+  "questions": [
+    {
+      "id": "article-haus",
+      "category": "Articles",
+      "prompt": "Choose the correct definite article for 'Haus' (house).",
+      "options": ["der", "die", "das"],
+      "answer": "das",
+      "explanation": "'Haus' is a neuter noun, so it takes 'das'."
+    },
+    {
+      "id": "article-frau",
+      "category": "Articles",
+      "prompt": "Choose the correct definite article for 'Frau' (woman).",
+      "options": ["der", "die", "das"],
+      "answer": "die",
+      "explanation": "'Frau' is feminine, so it takes 'die'."
+    },
+    {
+      "id": "article-baum",
+      "category": "Articles",
+      "prompt": "Choose the correct definite article for 'Baum' (tree).",
+      "options": ["der", "die", "das"],
+      "answer": "der",
+      "explanation": "'Baum' is masculine, so it takes 'der'."
+    },
+    {
+      "id": "word-order-time-manner-place",
+      "category": "Word Order",
+      "prompt": "Which order is most typical for adverbial phrases in German?",
+      "options": [
+        "Time - Manner - Place",
+        "Place - Time - Manner",
+        "Manner - Place - Time"
+      ],
+      "answer": "Time - Manner - Place",
+      "explanation": "A common guideline is time, manner, place (TMP)."
+    },
+    {
+      "id": "conjugation-sein-ich",
+      "category": "Verbs",
+      "prompt": "Fill the blank: 'Ich ___ müde.' (to be)",
+      "options": ["bin", "bist", "ist"],
+      "answer": "bin",
+      "explanation": "The verb 'sein' conjugates to 'bin' for 'ich'."
+    },
+    {
+      "id": "conjugation-haben-wir",
+      "category": "Verbs",
+      "prompt": "Fill the blank: 'Wir ___ Zeit.' (to have)",
+      "options": ["habt", "haben", "hast"],
+      "answer": "haben",
+      "explanation": "The verb 'haben' conjugates to 'haben' for 'wir'."
+    },
+    {
+      "id": "case-accusative",
+      "category": "Cases",
+      "prompt": "Which case usually answers 'Wen? oder Was?'",
+      "options": ["Nominative", "Accusative", "Dative"],
+      "answer": "Accusative",
+      "explanation": "Accusative is used for direct objects (Wen? Was?)."
+    },
+    {
+      "id": "case-dative",
+      "category": "Cases",
+      "prompt": "Which case usually answers 'Wem?'",
+      "options": ["Nominative", "Accusative", "Dative"],
+      "answer": "Dative",
+      "explanation": "Dative is used for indirect objects (Wem?)."
+    },
+    {
+      "id": "preposition-auf",
+      "category": "Prepositions",
+      "prompt": "Choose the correct translation: 'auf dem Tisch'.",
+      "options": ["under the table", "on the table", "in the table"],
+      "answer": "on the table",
+      "explanation": "'auf' commonly means 'on' when describing location."
+    },
+    {
+      "id": "plural-kind",
+      "category": "Nouns",
+      "prompt": "Select the plural form of 'Kind' (child).",
+      "options": ["Kinder", "Kinds", "Kinde"],
+      "answer": "Kinder",
+      "explanation": "The plural of 'Kind' is 'Kinder'."
+    }
+  ]
+}
